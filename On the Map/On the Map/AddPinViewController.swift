@@ -99,7 +99,6 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         if validateUrl(self.linkField.text) == false {
             errorAlert("Invalid URL", error: "Please try again.")
         } else {
-            errorAlert("Invalid URL", error: "Good.")
 
             //Prevents user from submitting twice.
             self.submitButton.hidden = true
@@ -142,7 +141,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     func validateUrl(url: String) -> Bool {
-        let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-]+\\.)+[a-zA-Z0-9_\\-\\/]+$"
+        let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
         if let match = url.rangeOfString(pattern, options: .RegularExpressionSearch){
             return true
         }
