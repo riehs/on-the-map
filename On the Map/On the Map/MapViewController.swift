@@ -22,14 +22,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         //Sets the center of the map.
         self.mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: -3.831239, longitude: -78.183406)
+        
+        //Adding a link to the annotation requires making the mapView a delegate of MKMapView.
+        self.mapView.delegate = self
     }
     
     
     override func viewWillAppear(animated: Bool) {
-        
-        //Adding a link to the annotation requires making the mapView a delegate of MKMapView.
-        self.mapView.delegate = self
-        
+
         for result in MapPoints.sharedInstance().mapPoints {
             
             //Creates an annotation and coordinate.
