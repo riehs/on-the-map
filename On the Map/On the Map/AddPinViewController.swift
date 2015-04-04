@@ -96,12 +96,11 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
     @IBAction func submitLocation(sender: AnyObject) {
         
-        //This technique flags many, but not all invalid web links.
-        let possibleURL = NSURL(string: self.linkField.text)
-        if possibleURL?.host == nil {
+        if validateUrl(self.linkField.text) == false {
             errorAlert("Invalid URL", error: "Please try again.")
         } else {
-            
+            errorAlert("Invalid URL", error: "Good.")
+
             //Prevents user from submitting twice.
             self.submitButton.hidden = true
             
@@ -141,6 +140,15 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         }
     }
     
+    
+    func validateUrl(url: String) -> Bool {
+        let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-]+\\.)+[a-zA-Z0-9_\\-\\/]+$"
+        if let match = url.rangeOfString(pattern, options: .RegularExpressionSearch){
+            return true
+        }
+        return false
+    }
+
     
     //Creates an Alert-style error message.
     func errorAlert(title: String, error: String) {
