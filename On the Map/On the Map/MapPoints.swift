@@ -63,7 +63,7 @@ class MapPoints: NSObject {
         task.resume()
     }
     
-    
+
     //Submit a student information node to Parse.
     func submitData(latitude: String, longitude: String, addressField: String, link: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
 
@@ -91,8 +91,8 @@ class MapPoints: NSObject {
         }
         task.resume()
 
-      
-        /* Code for deleting a record - Not currently in use.
+        /*
+        // Code for deleting a record - Not currently in use.
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation/UniqueObjectId")!)
         request.HTTPMethod = "DELETE"
@@ -109,8 +109,8 @@ class MapPoints: NSObject {
         }
         task.resume()
         
-        // End code for deleting. */
-
+        // End code for deleting.
+        */
 
     }
     

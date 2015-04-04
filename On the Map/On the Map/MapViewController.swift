@@ -40,7 +40,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotation.setCoordinate(location)
             
             //Adds a student name and URL to the annotation.
-            annotation.title = result.firstName + " " + result.lastName
+            annotation.title = result.fullName
             annotation.subtitle = result.mediaURL
             
             //Adds the annotation to the map.

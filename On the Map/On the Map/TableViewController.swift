@@ -24,7 +24,7 @@ class TableViewController: UITableViewController {
         let mapPoint = MapPoints.sharedInstance().mapPoints[indexPath.row]
         var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell
         
-        cell.textLabel!.text = mapPoint.firstName + " " + mapPoint.lastName
+        cell.textLabel!.text = mapPoint.fullName
         return cell
     }
     

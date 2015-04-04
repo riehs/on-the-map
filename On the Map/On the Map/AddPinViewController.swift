@@ -112,11 +112,11 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
             MapPoints.sharedInstance().submitData(self.coordinates.latitude.description, longitude: self.coordinates.longitude.description, addressField: self.addressField.text, link: self.linkField.text) { (success, errorString) in
                 if success {
                     
-                    //Fetches most-recent 100 data points from Parse. This should include the one that was just submitted. This happens before the segue so that the users sees his newly-submitted location on the map.
+                    //Fetches most-recent 100 data points from Parse. This should include the one that was just submitted. This happens before the view controller is dismissed so that the user sees his newly-submitted location on the map.
                     MapPoints.sharedInstance().fetchData() { (success, errorString) in
                         if success {
                             dispatch_async(dispatch_get_main_queue(), {
-                                self.performSegueWithIdentifier("returnToTabs", sender: self)
+                                self.dismissViewControllerAnimated(true, completion: nil)
                             })
                         } else {
                             dispatch_async(dispatch_get_main_queue(), {
