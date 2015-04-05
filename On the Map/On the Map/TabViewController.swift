@@ -10,14 +10,31 @@ import UIKit
 
 class TabViewController: UITabBarController {
     
+
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
-    @IBAction func refreshData(sender: AnyObject) {
+    @IBAction func tapRefreshButton(sender: AnyObject) {
+        self.refreshData()
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
         
+        //Checks to see if flag has been set to true by AddPinViewController.
+        if MapPoints.sharedInstance().needToRefreshData {
+            MapPoints.sharedInstance().needToRefreshData = false
+            refreshData()
+        }
+    }
+
+
+    //Reloads the data on the Map and Table views.
+    func refreshData() {
         //The disabled refresh button indicates that the refresh is in progress.
         self.refreshButton.enabled = false
         
-        //This function futches the latest data from the server.
+        //This function fetches the latest data from the server.
         MapPoints.sharedInstance().fetchData() { (success, errorString) in
             if !success {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -30,12 +47,14 @@ class TabViewController: UITabBarController {
                 })
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
+                    if let viewControllers = self.viewControllers {
+                        for viewController in viewControllers {
+                            (viewController as ReloadableTab).reloadViewController()
+                        }
+                    }
                     
                     //The re-enabled refresh button indicates that the refresh is complete.
                     self.refreshButton.enabled = true
-                    
-                    //This segue will call the ViewWillAppear function in the MapViewController, which will redraw the map.
-                    self.performSegueWithIdentifier("refreshView", sender: self)
                 })
             }
         }

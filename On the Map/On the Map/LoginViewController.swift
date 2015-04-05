@@ -22,19 +22,20 @@ class LoginViewController: UIViewController {
     @IBAction func tapSignUpButton(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
     }
-    
+
     
     //Tapping the loginButton fetches a userKey from Udacity, fetches a firstName and a lastName from Udacity, and then fetches student information from Parse. Only when all three steps are complete is the completeLogin function called to segue to the map.
     @IBAction func tapLoginButton(sender: AnyObject) {
         
+        self.loginButton.enabled = false
+        self.errorLabel.text = "Connecting..."
+        
         //Basic error check before sending the credentials to Udacity.
         if (self.usernameTextField.text == "" || self.passwordTextField.text == "") {
-            self.errorLabel.text = "Enter a username and password."
+            displayError("Enter a username and password.")
             
         //Fetching userKey from Udacity.
         } else {
-            self.loginButton.enabled = false
-            self.errorLabel.text = "Connecting..."
             UdacityLogin.sharedInstance().loginToUdacity(self.usernameTextField.text, password: self.passwordTextField.text) { (success, errorString) in
                 if success {
                     

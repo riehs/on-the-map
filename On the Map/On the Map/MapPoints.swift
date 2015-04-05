@@ -18,7 +18,11 @@ class MapPoints: NSObject {
     
     //Each point on the map is a StudentInformation object. They are stored in this array.
     var mapPoints = [StudentInformation]()
-
+    
+    
+    //This will be set to true when a new pin is submitted to Parse.
+    var needToRefreshData = false
+    
     
     //Get student information from Parse.
     func fetchData(completionHandler: (success: Bool, errorString: String?) -> Void) {
@@ -53,6 +57,10 @@ class MapPoints: NSObject {
                     for result in results {
                         self.mapPoints.append(StudentInformation(dictionary: result))
                     }
+                    
+                    //Setting this flag to true lets the TabViewController know that the views need to be reloaded.
+                    self.needToRefreshData = true
+                    
                     completionHandler(success: true, errorString: nil)
                 } else {
                     completionHandler(success: false, errorString: "Could not find results in \(parsedResult)")
@@ -91,6 +99,7 @@ class MapPoints: NSObject {
         }
         task.resume()
 
+        
         /*
         // Code for deleting a record - Not currently in use.
         
@@ -111,6 +120,7 @@ class MapPoints: NSObject {
         
         // End code for deleting.
         */
+
 
     }
     

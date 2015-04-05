@@ -8,14 +8,8 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
-    
-    
-    //The table is reloaded every time the view appears, but new data will only be available if the MapPoints.fetchData() function has been called.
-    override func viewWillAppear(animated: Bool) {
-        tableView.reloadData()
-    }
-    
+class TableViewController: UITableViewController, ReloadableTab {
+
     
     //The data for the table cells is stored in the mapPonts array in the sharedInstace of the MapPoints object.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -34,7 +28,14 @@ class TableViewController: UITableViewController {
     }
 
     
+    //Opens the mediaURL in Safari when a table cell is tapped.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         UIApplication.sharedApplication().openURL(NSURL(string: MapPoints.sharedInstance().mapPoints[indexPath.row].mediaURL)!)
+    }
+    
+    
+    //Required to conform to the ReloadableTab protocol.
+    func reloadViewController() {
+        tableView.reloadData()
     }
 }

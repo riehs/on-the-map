@@ -18,8 +18,14 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var workingMessage: UILabel!
     
+    
     var coordinates: CLLocationCoordinate2D!
     
+
+    @IBAction func tapCancelButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +56,8 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.workingMessage.hidden = true
                 self.errorAlert("Invalid location", error: "Please try again.")
             }
-
-            //If geocoding is successful, multiple locations may be returned in an array. Only the first location is used below.
+                
+                //If geocoding is successful, multiple locations may be returned in an array. Only the first location is used below.
             else if let placemark = placemarks?[0] as? CLPlacemark {
                 var placemark: CLPlacemark = placemarks[0] as CLPlacemark
                 
@@ -88,18 +94,18 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                 
                 //The user can now submit the location.
                 self.submitButton.hidden = false
-
+                
             }
         })
     }
-
-
+    
+    
     @IBAction func submitLocation(sender: AnyObject) {
         
         if validateUrl(self.linkField.text) == false {
             errorAlert("Invalid URL", error: "Please try again.")
         } else {
-
+            
             //Prevents user from submitting twice.
             self.submitButton.hidden = true
             
@@ -109,23 +115,10 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
             //Submits the new data point.
             MapPoints.sharedInstance().submitData(self.coordinates.latitude.description, longitude: self.coordinates.longitude.description, addressField: self.addressField.text, link: self.linkField.text) { (success, errorString) in
                 if success {
-                    
-                    //Fetches most-recent 100 data points from Parse. This should include the one that was just submitted. This happens before the view controller is dismissed so that the user sees his newly-submitted location on the map.
-                    MapPoints.sharedInstance().fetchData() { (success, errorString) in
-                        if success {
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.dismissViewControllerAnimated(true, completion: nil)
-                            })
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), {
-                                
-                                //If there is an error, the submit button is unhidden so that the user can try again.
-                                self.submitButton.hidden = false
-                                self.workingMessage.hidden = true
-                                self.errorAlert("Error", error: errorString!)
-                            })
-                        }
-                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        MapPoints.sharedInstance().needToRefreshData = true
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
                 } else {
                     dispatch_async(dispatch_get_main_queue(), {
                         
@@ -140,15 +133,6 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     
-    func validateUrl(url: String) -> Bool {
-        let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
-        if let match = url.rangeOfString(pattern, options: .RegularExpressionSearch){
-            return true
-        }
-        return false
-    }
-
-    
     //Creates an Alert-style error message.
     func errorAlert(title: String, error: String) {
         let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .Alert)
@@ -160,5 +144,15 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     //Makes it easier for the user to enter a valid link.
     func textFieldDidBeginEditing(textField: UITextField) {
         textField.text = "http://"
+    }
+    
+    
+    //Regular expression used for validating submitted URLs.
+    func validateUrl(url: String) -> Bool {
+        let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
+        if let match = url.rangeOfString(pattern, options: .RegularExpressionSearch){
+            return true
+        }
+        return false
     }
 }

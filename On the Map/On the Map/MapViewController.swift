@@ -9,13 +9,14 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
     
     
     @IBOutlet weak var mapView: MKMapView!
     
-    
+
     override func viewDidLoad() {
+        super.viewDidLoad()
         
         //Sets the map zoom.
         self.mapView?.camera.altitude = 50000000;
@@ -25,27 +26,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         //Adding a link to the annotation requires making the mapView a delegate of MKMapView.
         self.mapView.delegate = self
-    }
-    
-    
-    override func viewWillAppear(animated: Bool) {
-
-        for result in MapPoints.sharedInstance().mapPoints {
-            
-            //Creates an annotation and coordinate.
-            var annotation = MKPointAnnotation()
-            var location = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
-            
-            //Sets the coordinates of the annotation.
-            annotation.setCoordinate(location)
-            
-            //Adds a student name and URL to the annotation.
-            annotation.title = result.fullName
-            annotation.subtitle = result.mediaURL
-            
-            //Adds the annotation to the map.
-            self.mapView.addAnnotation(annotation)
-        }
+        
+        //Draws the annotations on the map.
+        reloadViewController()
     }
     
     
@@ -62,5 +45,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         view.calloutOffset = CGPoint(x: -5, y: 5)
         view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as UIView
         return view
+    }
+    
+    
+    //Required to conform to the ReloadableTab protocol.
+    func reloadViewController() {
+        for result in MapPoints.sharedInstance().mapPoints {
+            
+            //Creates an annotation and coordinate.
+            var annotation = MKPointAnnotation()
+            var location = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+            
+            //Sets the coordinates of the annotation.
+            annotation.setCoordinate(location)
+            
+            //Adds a student name and URL to the annotation.
+            annotation.title = result.fullName
+            annotation.subtitle = result.mediaURL
+            
+            //Adds the annotation to the map.
+            self.mapView.addAnnotation(annotation)
+        }
     }
 }
