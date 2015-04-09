@@ -49,7 +49,7 @@ class TabViewController: UITabBarController {
                 dispatch_async(dispatch_get_main_queue(), {
                     if let viewControllers = self.viewControllers {
                         for viewController in viewControllers {
-                            (viewController as ReloadableTab).reloadViewController()
+                            (viewController as! ReloadableTab).reloadViewController()
                         }
                     }
                     

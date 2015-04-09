@@ -43,7 +43,7 @@ class UdacityLogin: NSObject {
         
             //Parse the data.
             var parsingError: NSError? = nil
-            let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
+            let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
             
             //Get the uerKey.
             if let userKey = parsedResult["account"]?.valueForKey("key") as? String {
@@ -78,7 +78,7 @@ class UdacityLogin: NSObject {
 
             //Parse the data.
             var parsingError: NSError? = nil
-            let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
+            let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
         
             //Get the first name.
             if let firstName = parsedResult["user"]?.valueForKey("first_name") as? String {

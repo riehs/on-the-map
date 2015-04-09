@@ -42,9 +42,9 @@ class MapPoints: NSObject {
             
             //Parse the data.
             var parsingError: NSError? = nil
-            let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
+            let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
 
-            if let error = parsingError? {
+            if let error = parsingError {
                 completionHandler(success: false, errorString: error.description)
                 
             } else {

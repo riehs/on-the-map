@@ -16,7 +16,7 @@ class TableViewController: UITableViewController, ReloadableTab {
         
         let cellReuseIdentifier = "MapPointTableViewCell"
         let mapPoint = MapPoints.sharedInstance().mapPoints[indexPath.row]
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as! UITableViewCell
         
         cell.textLabel!.text = mapPoint.fullName
         return cell

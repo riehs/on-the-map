@@ -49,7 +49,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         var geocoder: CLGeocoder = CLGeocoder()
         
         //Geocodes the location.
-        geocoder.geocodeAddressString(location, { (placemarks, error) -> Void in
+        geocoder.geocodeAddressString(location, completionHandler: { (placemarks, error) -> Void in
             
             //Returns an error if geocoding is unsuccessful.
             if ((error) != nil) {
@@ -59,7 +59,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                 
                 //If geocoding is successful, multiple locations may be returned in an array. Only the first location is used below.
             else if let placemark = placemarks?[0] as? CLPlacemark {
-                var placemark: CLPlacemark = placemarks[0] as CLPlacemark
+                var placemark: CLPlacemark = placemarks[0] as! CLPlacemark
                 
                 //Creats a coordinate and annotation.
                 var coordinates: CLLocationCoordinate2D = placemark.location.coordinate

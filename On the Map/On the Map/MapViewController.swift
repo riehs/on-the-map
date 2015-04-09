@@ -43,7 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
         var view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MapAnnotation")
         view.canShowCallout = true
         view.calloutOffset = CGPoint(x: -5, y: 5)
-        view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as UIView
+        view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
         return view
     }
     
@@ -57,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
             var location = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
             
             //Sets the coordinates of the annotation.
-            annotation.setCoordinate(location)
+            annotation.coordinate = location
             
             //Adds a student name and URL to the annotation.
             annotation.title = result.fullName

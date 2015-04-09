@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
     //Complete the login and present the first navigation controller.
     func completeLogin() {
         dispatch_async(dispatch_get_main_queue(), {
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("StudentsNavigationController") as UINavigationController
+            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("StudentsNavigationController") as! UINavigationController
             self.presentViewController(controller, animated: true, completion: nil)
         })
     }
@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
     //Display error messages returned from any of the completion handlers.
     func displayError(errorString: String?) {
         dispatch_async(dispatch_get_main_queue(), {
-            if let errorString = errorString? {
+            if let errorString = errorString {
                 self.errorLabel.text = errorString
                 //The login button in re-enabled so that the user can try again.
                 self.loginButton.enabled = true
