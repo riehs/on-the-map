@@ -14,7 +14,7 @@ class TabViewController: UITabBarController {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
 
     @IBAction func tapRefreshButton(sender: AnyObject) {
-        self.refreshData()
+        refreshData()
     }
 
 
@@ -32,7 +32,7 @@ class TabViewController: UITabBarController {
     //Reloads the data on the Map and Table views.
     func refreshData() {
         //The disabled refresh button indicates that the refresh is in progress.
-        self.refreshButton.enabled = false
+        refreshButton.enabled = false
 
         //This function fetches the latest data from the server.
         MapPoints.sharedInstance().fetchData() { (success, errorString) in

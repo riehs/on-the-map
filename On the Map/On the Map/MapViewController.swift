@@ -19,13 +19,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
         super.viewDidLoad()
 
         //Sets the map zoom.
-        self.mapView?.camera.altitude = 50000000;
+        mapView?.camera.altitude = 50000000;
 
         //Sets the center of the map.
-        self.mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: -3.831239, longitude: -78.183406)
+        mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: -3.831239, longitude: -78.183406)
 
         //Adding a link to the annotation requires making the mapView a delegate of MKMapView.
-        self.mapView.delegate = self
+        mapView.delegate = self
 
         //Draws the annotations on the map.
         reloadViewController()
@@ -64,7 +64,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
             annotation.subtitle = result.mediaURL
 
             //Adds the annotation to the map.
-            self.mapView.addAnnotation(annotation)
+            mapView.addAnnotation(annotation)
         }
     }
 }

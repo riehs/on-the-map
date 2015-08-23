@@ -27,16 +27,16 @@ class LoginViewController: UIViewController {
     //Tapping the loginButton fetches a userKey from Udacity, fetches a firstName and a lastName from Udacity, and then fetches student information from Parse. Only when all three steps are complete is the completeLogin function called to segue to the map.
     @IBAction func tapLoginButton(sender: AnyObject) {
 
-        self.loginButton.enabled = false
-        self.errorLabel.text = "Connecting..."
+        loginButton.enabled = false
+        errorLabel.text = "Connecting..."
 
         //Basic error check before sending the credentials to Udacity.
-        if (self.usernameTextField.text == "" || self.passwordTextField.text == "") {
+        if (usernameTextField.text == "" || passwordTextField.text == "") {
             displayError("Enter a username and password.")
 
         //Fetching userKey from Udacity.
         } else {
-            UdacityLogin.sharedInstance().loginToUdacity(self.usernameTextField.text, password: self.passwordTextField.text) { (success, errorString) in
+            UdacityLogin.sharedInstance().loginToUdacity(usernameTextField.text, password: passwordTextField.text) { (success, errorString) in
                 if success {
 
                     //Fetching first and last name from Udacity.

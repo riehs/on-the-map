@@ -23,7 +23,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 
     @IBAction func tapCancelButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
 
@@ -31,21 +31,21 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         super.viewDidLoad()
     
         //This is required to add "http://" to the linkField text field when a user starts typing.
-        self.linkField.delegate = self
+        linkField.delegate = self
     
         //These items aren't revealed until the user successfully finds a location.
-        self.mapView.hidden = true
-        self.submitButton.hidden = true
-        self.workingMessage.hidden = true
+        mapView.hidden = true
+        submitButton.hidden = true
+        workingMessage.hidden = true
     }
 
 
     @IBAction func findOnMap(sender: AnyObject) {
 
         //Indicates the geocoding is in process.
-        self.workingMessage.hidden = false
+        workingMessage.hidden = false
 
-        let location = self.addressField.text
+        let location = addressField.text
         var geocoder: CLGeocoder = CLGeocoder()
 
         //Geocodes the location.
@@ -102,18 +102,18 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
     @IBAction func submitLocation(sender: AnyObject) {
 
-        if validateUrl(self.linkField.text) == false {
+        if validateUrl(linkField.text) == false {
             errorAlert("Invalid URL", error: "Please try again.")
         } else {
 
             //Prevents user from submitting twice.
-            self.submitButton.hidden = true
+            submitButton.hidden = true
 
             //Indicates that the app is working
-            self.workingMessage.hidden = false
+            workingMessage.hidden = false
 
             //Submits the new data point.
-            MapPoints.sharedInstance().submitData(self.coordinates.latitude.description, longitude: self.coordinates.longitude.description, addressField: self.addressField.text, link: self.linkField.text) { (success, errorString) in
+            MapPoints.sharedInstance().submitData(coordinates.latitude.description, longitude: coordinates.longitude.description, addressField: addressField.text, link: linkField.text) { (success, errorString) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         MapPoints.sharedInstance().needToRefreshData = true
@@ -137,7 +137,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     func errorAlert(title: String, error: String) {
         let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .Alert)
         controller.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(controller, animated: true, completion: nil)
+        presentViewController(controller, animated: true, completion: nil)
     }
 
 
