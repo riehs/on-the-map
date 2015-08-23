@@ -7,7 +7,7 @@
 //
 
 @objc protocol ReloadableTab {
-    
+
     func reloadViewController()
-    
+
 }

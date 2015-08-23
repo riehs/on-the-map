@@ -9,15 +9,15 @@
 import UIKit
 
 class TabViewController: UITabBarController {
-    
+
 
     @IBOutlet weak var refreshButton: UIBarButtonItem!
-    
+
     @IBAction func tapRefreshButton(sender: AnyObject) {
         self.refreshData()
     }
-    
-    
+
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
@@ -33,7 +33,7 @@ class TabViewController: UITabBarController {
     func refreshData() {
         //The disabled refresh button indicates that the refresh is in progress.
         self.refreshButton.enabled = false
-        
+
         //This function fetches the latest data from the server.
         MapPoints.sharedInstance().fetchData() { (success, errorString) in
             if !success {
@@ -52,7 +52,7 @@ class TabViewController: UITabBarController {
                             (viewController as! ReloadableTab).reloadViewController()
                         }
                     }
-                    
+
                     //The re-enabled refresh button indicates that the refresh is complete.
                     self.refreshButton.enabled = true
                 })
