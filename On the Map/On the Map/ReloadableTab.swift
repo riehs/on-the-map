@@ -8,6 +8,6 @@
 
 @objc protocol ReloadableTab {
 
-    func reloadViewController()
+	func reloadViewController()
 
 }
