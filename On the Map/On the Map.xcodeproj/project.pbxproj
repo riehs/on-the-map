@@ -36,7 +36,7 @@
 
 /* Begin PBXFileReference section */
 		A20160D91AD1B1E50008890A /* AddPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPinViewController.swift; sourceTree = "<group>"; usesTabs = 1; };
-		A21ACAFA1AC24918007169CF /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		A21ACAFA1AC24918007169CF /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; usesTabs = 1; };
 		A23D3B4B1AD0DBD900C953E3 /* ReloadableTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReloadableTab.swift; sourceTree = "<group>"; usesTabs = 1; };
 		A23FC67D1AC0CF7300363DA1 /* UdacityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityLogin.swift; sourceTree = "<group>"; usesTabs = 1; };
 		A23FC6811AC0FECE00363DA1 /* MapPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPoints.swift; sourceTree = "<group>"; usesTabs = 1; };
