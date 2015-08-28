@@ -114,6 +114,7 @@
 				A26588F81ABEFB0100D52C10 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		A26588F81ABEFB0100D52C10 /* Products */ = {
 			isa = PBXGroup;
