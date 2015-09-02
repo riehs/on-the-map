@@ -18,6 +18,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	@IBOutlet weak var submitButton: UIButton!
 	@IBOutlet weak var workingMessage: UILabel!
 
+	let LINK_FIELD = 1
 
 	var coordinates: CLLocationCoordinate2D!
 
@@ -27,12 +28,22 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	}
 
 
+    @IBAction func tapFindButton(sender: AnyObject) {
+        findOnMap()
+    }
+
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-	
-		//This is required to add "http://" to the linkField text field when a user starts typing.
+
+		linkField.tag = LINK_FIELD
+
+		//This is required to add "http://" to the linkField text field when a user starts typing, and to call a findOnMap() when the return key is pressed.
 		linkField.delegate = self
-	
+
+        //This is required to call the findOnMap() function when the return key is pressed.
+        addressField.delegate = self
+
 		//These items aren't revealed until the user successfully finds a location.
 		mapView.hidden = true
 		submitButton.hidden = true
@@ -40,7 +51,15 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	}
 
 
-	@IBAction func findOnMap(sender: AnyObject) {
+	//Calls the findOnMap() function when the keyboard return key is pressed.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+
+		findOnMap()
+		return true
+    }
+
+
+	func findOnMap() {
 
 		//Indicates the geocoding is in process.
 		workingMessage.hidden = false
@@ -98,7 +117,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 			}
 		})
 	}
-	
+
 
 	@IBAction func submitLocation(sender: AnyObject) {
 
@@ -143,7 +162,10 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 	//Makes it easier for the user to enter a valid link.
 	func textFieldDidBeginEditing(textField: UITextField) {
-		textField.text = "http://"
+
+		if textField.tag == LINK_FIELD {
+			textField.text = "http://"
+		}
 	}
 
 

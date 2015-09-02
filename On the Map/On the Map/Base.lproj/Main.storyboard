@@ -289,6 +289,7 @@
                                 </state>
                                 <connections>
                                     <action selector="findOnMap:" destination="tBN-k7-7aY" eventType="touchUpInside" id="Hht-ez-w17"/>
+                                    <action selector="tapFindButton:" destination="tBN-k7-7aY" eventType="touchUpInside" id="xdJ-3n-td9"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a link to share" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kc1-ym-Zv9">
@@ -353,7 +354,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressField" destination="bBn-My-dos" id="b2C-Yb-hAt"/>
-                        <outlet property="findButton" destination="wXf-Kv-zD2" id="OhR-Vc-cRL"/>
+                        <outlet property="findButton" destination="wXf-Kv-zD2" id="GWa-a9-82h"/>
                         <outlet property="linkField" destination="kc1-ym-Zv9" id="LPg-6b-QWu"/>
                         <outlet property="mapView" destination="Wao-6u-9LJ" id="W00-Hr-bu1"/>
                         <outlet property="submitButton" destination="l0C-0N-bop" id="NwD-c9-Ocl"/>
