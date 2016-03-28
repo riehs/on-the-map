@@ -12,8 +12,8 @@ class MapPoints: NSObject {
 
 
 	//The Parse Application ID and API Key are available in the "On the Map Project Details" section of Udacity.com's "iOS Networking with Swift" course.
-	let ParseID: String = "SET APPLICATION ID HERE."
-	let ParseAPIKey: String = "SET API KEY HERE."
+	let ParseID: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"//"SET APPLICATION ID HERE."
+	let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"//"SET API KEY HERE."
 
 
 	//Each point on the map is a StudentInformation object. They are stored in this array.
@@ -37,7 +37,7 @@ class MapPoints: NSObject {
 		//Initialize task for data retrieval.
 		let task = session.dataTaskWithRequest(request) { data, response, error in
 			if error != nil {
-				completionHandler(success: false, errorString: error.description)
+				completionHandler(success: false, errorString: error!.description)
 			}
 
 			//Parse the data.

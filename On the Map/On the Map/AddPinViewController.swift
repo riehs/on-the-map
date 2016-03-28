@@ -68,7 +68,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 		var geocoder: CLGeocoder = CLGeocoder()
 
 		//Geocodes the location.
-		geocoder.geocodeAddressString(location, completionHandler: { (placemarks, error) -> Void in
+		geocoder.geocodeAddressString(location!, completionHandler: { (placemarks, error) -> Void in
 
 			//Returns an error if geocoding is unsuccessful.
 			if ((error) != nil) {
@@ -78,10 +78,10 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 				//If geocoding is successful, multiple locations may be returned in an array. Only the first location is used below.
 			else if let placemark = placemarks?[0] as? CLPlacemark {
-				var placemark: CLPlacemark = placemarks[0] as! CLPlacemark
+				var placemark: CLPlacemark = placemarks![0] as! CLPlacemark
 
 				//Creats a coordinate and annotation.
-				var coordinates: CLLocationCoordinate2D = placemark.location.coordinate
+				var coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
 				var pointAnnotation: MKPointAnnotation = MKPointAnnotation()
 				pointAnnotation.coordinate = coordinates
 
@@ -121,7 +121,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 	@IBAction func submitLocation(sender: AnyObject) {
 
-		if validateUrl(linkField.text) == false {
+		if validateUrl(linkField.text!) == false {
 			errorAlert("Invalid URL", error: "Please try again.")
 		} else {
 
@@ -132,7 +132,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 			workingMessage.hidden = false
 
 			//Submits the new data point.
-			MapPoints.sharedInstance().submitData(coordinates.latitude.description, longitude: coordinates.longitude.description, addressField: addressField.text, link: linkField.text) { (success, errorString) in
+			MapPoints.sharedInstance().submitData(coordinates.latitude.description, longitude: coordinates.longitude.description, addressField: addressField.text!, link: linkField.text!) { (success, errorString) in
 				if success {
 					dispatch_async(dispatch_get_main_queue(), {
 						MapPoints.sharedInstance().needToRefreshData = true
@@ -172,7 +172,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	//Regular expression used for validating submitted URLs.
 	func validateUrl(url: String) -> Bool {
 		let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
-		if let match = url.rangeOfString(pattern, options: .RegularExpressionSearch){
+		if l.rangeOfString(pattern, options: .RegularExpressionSearch) != nil{
 			return true
 		}
 		return false

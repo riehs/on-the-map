@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
 
 		//Fetching userKey from Udacity.
 		} else {
-			UdacityLogin.sharedInstance().loginToUdacity(usernameTextField.text, password: passwordTextField.text) { (success, errorString) in
+			UdacityLogin.sharedInstance().loginToUdacity(usernameTextField.text!, password: passwordTextField.text!) { (success, errorString) in
 				if success {
 
 					//Fetching first and last name from Udacity.
