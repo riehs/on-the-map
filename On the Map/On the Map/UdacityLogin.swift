@@ -42,7 +42,6 @@ class UdacityLogin: NSObject {
 			let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
 
 			//Parse the data.
-			var parsingError: NSError? = nil
 			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 
 			//Get the uerKey.
@@ -77,7 +76,6 @@ class UdacityLogin: NSObject {
 			let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
 
 			//Parse the data.
-			var parsingError: NSError? = nil
 			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 
 			//Get the first name.
