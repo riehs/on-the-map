@@ -65,7 +65,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 		workingMessage.hidden = false
 
 		let location = addressField.text
-		var geocoder: CLGeocoder = CLGeocoder()
+		let geocoder: CLGeocoder = CLGeocoder()
 
 		//Geocodes the location.
 		geocoder.geocodeAddressString(location!, completionHandler: { (placemarks, error) -> Void in
@@ -77,12 +77,13 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 			}
 
 				//If geocoding is successful, multiple locations may be returned in an array. Only the first location is used below.
-			else if let placemark = placemarks?[0] as? CLPlacemark {
-				var placemark: CLPlacemark = placemarks![0] as! CLPlacemark
+				
+			else if placemarks?[0] != nil {
+				let placemark: CLPlacemark = placemarks![0]
 
 				//Creats a coordinate and annotation.
-				var coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
-				var pointAnnotation: MKPointAnnotation = MKPointAnnotation()
+				let coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
+				let pointAnnotation: MKPointAnnotation = MKPointAnnotation()
 				pointAnnotation.coordinate = coordinates
 
 				//Displays the map.
@@ -172,7 +173,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	//Regular expression used for validating submitted URLs.
 	func validateUrl(url: String) -> Bool {
 		let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
-		if l.rangeOfString(pattern, options: .RegularExpressionSearch) != nil{
+		if url.rangeOfString(pattern, options: .RegularExpressionSearch) != nil {
 			return true
 		}
 		return false

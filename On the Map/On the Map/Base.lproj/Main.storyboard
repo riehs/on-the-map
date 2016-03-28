@@ -266,7 +266,7 @@
         <!--Add Pin View Controller-->
         <scene sceneID="oEH-Eb-Xwn">
             <objects>
-                <viewController id="tBN-k7-7aY" customClass="AddPinViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tBN-k7-7aY" customClass="AddPinViewController" customModule="On_the_Map" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uw2-Rw-0HJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Rl9-jO-Rnb"/>
@@ -293,7 +293,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="findOnMap:" destination="tBN-k7-7aY" eventType="touchUpInside" id="Hht-ez-w17"/>
                                     <action selector="tapFindButton:" destination="tBN-k7-7aY" eventType="touchUpInside" id="xdJ-3n-td9"/>
                                 </connections>
                             </button>

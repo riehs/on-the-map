@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
 //
 
+import Foundation
+
 @objc protocol ReloadableTab {
 
 	func reloadViewController()

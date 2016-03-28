@@ -12,8 +12,8 @@ class MapPoints: NSObject {
 
 
 	//The Parse Application ID and API Key are available in the "On the Map Project Details" section of Udacity.com's "iOS Networking with Swift" course.
-	let ParseID: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"//"SET APPLICATION ID HERE."
-	let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"//"SET API KEY HERE."
+	let ParseID: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+	let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
 
 
 	//Each point on the map is a StudentInformation object. They are stored in this array.
@@ -41,8 +41,8 @@ class MapPoints: NSObject {
 			}
 
 			//Parse the data.
-			var parsingError: NSError? = nil
-			let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+			let parsingError: NSError? = nil
+			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 
 			if let error = parsingError {
 				completionHandler(success: false, errorString: error.description)

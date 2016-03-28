@@ -33,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
 
 
 	//Opens the mediaURL in Safari when the annotation info box is tapped.
-	func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 		UIApplication.sharedApplication().openURL(NSURL(string: view.annotation!.subtitle!!)!)
 	}
 
@@ -43,7 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
 		let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MapAnnotation")
 		view.canShowCallout = true
 		view.calloutOffset = CGPoint(x: -5, y: 5)
-		view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as UIView
+		view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
 		return view
 	}
 
@@ -54,7 +54,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
 
 			//Creates an annotation and coordinate.
 			let annotation = MKPointAnnotation()
-			var location = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+			let location = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
 
 			//Sets the coordinates of the annotation.
 			annotation.coordinate = location

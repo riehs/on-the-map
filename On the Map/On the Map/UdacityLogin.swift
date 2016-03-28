@@ -39,11 +39,11 @@ class UdacityLogin: NSObject {
 				}
 
 			//The first five characters must be removed. They are included by Udacity for security purposes.
-			let newData = data.subdataWithRange(NSMakeRange(5, data!.length - 5))
+			let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
 
 			//Parse the data.
 			var parsingError: NSError? = nil
-			let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 
 			//Get the uerKey.
 			if let userKey = parsedResult["account"]?.valueForKey("key") as? String {
@@ -78,7 +78,7 @@ class UdacityLogin: NSObject {
 
 			//Parse the data.
 			var parsingError: NSError? = nil
-			let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 
 			//Get the first name.
 			if let firstName = parsedResult["user"]?.valueForKey("first_name") as? String {
