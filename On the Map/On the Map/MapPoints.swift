@@ -16,6 +16,10 @@ class MapPoints: NSObject {
 	let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
 
 
+	//Database URL:
+	let DatabaseURL: String = "https://parse.udacity.com/parse/classes"
+
+
 	//Each point on the map is a StudentInformation object. They are stored in this array.
 	var mapPoints = [StudentInformation]()
 
@@ -27,7 +31,7 @@ class MapPoints: NSObject {
 	//Get student information from Parse.
 	func fetchData(completionHandler: (success: Bool, errorString: String?) -> Void) {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
+		let request = NSMutableURLRequest(URL: NSURL(string:  "\(self.DatabaseURL)/StudentLocation")!)
 		request.addValue(self.ParseID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(self.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 
@@ -75,7 +79,7 @@ class MapPoints: NSObject {
 	//Submit a student information node to Parse.
 	func submitData(latitude: String, longitude: String, addressField: String, link: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
+		let request = NSMutableURLRequest(URL: NSURL(string: "\(self.DatabaseURL)/StudentLocation")!)
 		request.HTTPMethod = "POST"
 		request.addValue(self.ParseID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(self.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -103,7 +107,7 @@ class MapPoints: NSObject {
 		/*
 		// Code for deleting a record - Not currently in use.
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation/UniqueObjectId")!)
+		let request = NSMutableURLRequest(URL: NSURL(string: "\(self.DatabaseURL)/StudentLocation/UniqueObjectId")!)
 		request.HTTPMethod = "DELETE"
 		request.addValue(self.ParseID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(self.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
