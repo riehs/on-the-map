@@ -11,7 +11,7 @@ import Foundation
 class MapPoints: NSObject {
 
 
-	//The Parse Application ID and API Key are available in the "On the Map Project Details" section of Udacity.com's "iOS Networking with Swift" course.
+	//These shared keys are used by all students in Udacity.com's "iOS Networking with Swift" course.
 	let ParseID: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
 	let ParseAPIKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
 
