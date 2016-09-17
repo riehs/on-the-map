@@ -33,17 +33,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, ReloadableTab {
 
 
 	//Opens the mediaURL in Safari when the annotation info box is tapped.
-	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-		UIApplication.sharedApplication().openURL(NSURL(string: view.annotation!.subtitle!!)!)
+	func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+		UIApplication.shared.openURL(URL(string: view.annotation!.subtitle!!)!)
 	}
 
 
 	//Adds a "callout" to the annotation info box so that it can be tapped to access the mediaURL.
-	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MapAnnotation")
 		view.canShowCallout = true
 		view.calloutOffset = CGPoint(x: -5, y: 5)
-		view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+		view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
 		return view
 	}
 

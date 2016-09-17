@@ -19,15 +19,15 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var loginButton: UIButton!
 
 
-	@IBAction func tapSignUpButton(sender: AnyObject) {
-		UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
+	@IBAction func tapSignUpButton(_ sender: AnyObject) {
+		UIApplication.shared.openURL(URL(string: "https://www.udacity.com/account/auth#!/signup")!)
 	}
 
 
 	//Tapping the loginButton fetches a userKey from Udacity, fetches a firstName and a lastName from Udacity, and then fetches student information from Parse. Only when all three steps are complete is the completeLogin function called to segue to the map.
-	@IBAction func tapLoginButton(sender: AnyObject) {
+	@IBAction func tapLoginButton(_ sender: AnyObject) {
 
-		loginButton.enabled = false
+		loginButton.isEnabled = false
 		errorLabel.text = "Connecting..."
 
 		//Basic error check before sending the credentials to Udacity.
@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
 
 		//Fetching userKey from Udacity.
 		} else {
-			UdacityLogin.sharedInstance().loginToUdacity(usernameTextField.text!, password: passwordTextField.text!) { (success, errorString) in
+			UdacityLogin.sharedInstance().loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, errorString) in
 				if success {
 
 					//Fetching first and last name from Udacity.
@@ -65,20 +65,20 @@ class LoginViewController: UIViewController {
 
 	//Complete the login and present the first navigation controller.
 	func completeLogin() {
-		dispatch_async(dispatch_get_main_queue(), {
-			let controller = self.storyboard!.instantiateViewControllerWithIdentifier("StudentsNavigationController") as! UINavigationController
-			self.presentViewController(controller, animated: true, completion: nil)
+		DispatchQueue.main.async(execute: {
+			let controller = self.storyboard!.instantiateViewController(withIdentifier: "StudentsNavigationController") as! UINavigationController
+			self.present(controller, animated: true, completion: nil)
 		})
 	}
 
 
 	//Display error messages returned from any of the completion handlers.
-	func displayError(errorString: String?) {
-		dispatch_async(dispatch_get_main_queue(), {
+	func displayError(_ errorString: String?) {
+		DispatchQueue.main.async(execute: {
 			if let errorString = errorString {
 				self.errorLabel.text = errorString
 				//The login button in re-enabled so that the user can try again.
-				self.loginButton.enabled = true
+				self.loginButton.isEnabled = true
 			}
 		})
 	}

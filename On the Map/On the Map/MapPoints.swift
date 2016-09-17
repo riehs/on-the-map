@@ -29,33 +29,33 @@ class MapPoints: NSObject {
 
 
 	//Get student information from Parse.
-	func fetchData(completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func fetchData(_ completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
-		let request = NSMutableURLRequest(URL: NSURL(string:  "\(self.DatabaseURL)/StudentLocation")!)
+		let request = NSMutableURLRequest(url: URL(string:  "\(self.DatabaseURL)/StudentLocation")!)
 		request.addValue(self.ParseID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(self.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 
 		//Initialize session.
-		let session = NSURLSession.sharedSession()
+		let session = URLSession.shared
 
 		//Initialize task for data retrieval.
-		let task = session.dataTaskWithRequest(request) { data, response, error in
+		let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
 			if error != nil {
-				completionHandler(success: false, errorString: error!.description)
+				completionHandler(false, error!.localizedDescription)
 			}
 
 			//Parse the data.
 			let parsingError: NSError? = nil
-			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+			let parsedResult = (try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
 			if let error = parsingError {
-				completionHandler(success: false, errorString: error.description)
+				completionHandler(false, error.description)
 
 			} else {
 				if let results = parsedResult["results"] as? [[String : AnyObject]] {
 
 					//Clear existing data from the mapPoints object.
-					self.mapPoints.removeAll(keepCapacity: true)
+					self.mapPoints.removeAll(keepingCapacity: true)
 
 					//Re-populate the mapPoints object with refreshed data.
 					for result in results {
@@ -65,42 +65,42 @@ class MapPoints: NSObject {
 					//Setting this flag to true lets the TabViewController know that the views need to be reloaded.
 					self.needToRefreshData = true
 
-					completionHandler(success: true, errorString: nil)
+					completionHandler(true, nil)
 				} else {
-					completionHandler(success: false, errorString: "Could not find results in \(parsedResult)")
+					completionHandler(false, "Could not find results in \(parsedResult)")
 				}
 			}
 
-		}
+		}) 
 		task.resume()
 	}
 
 
 	//Submit a student information node to Parse.
-	func submitData(latitude: String, longitude: String, addressField: String, link: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func submitData(_ latitude: String, longitude: String, addressField: String, link: String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "\(self.DatabaseURL)/StudentLocation")!)
-		request.HTTPMethod = "POST"
+		let request = NSMutableURLRequest(url: URL(string: "\(self.DatabaseURL)/StudentLocation")!)
+		request.httpMethod = "POST"
 		request.addValue(self.ParseID, forHTTPHeaderField: "X-Parse-Application-Id")
 		request.addValue(self.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
 		//API Parameters.
-		request.HTTPBody = "{\"uniqueKey\": \"\(UdacityLogin.sharedInstance().userKey)\", \"firstName\": \"\(UdacityLogin.sharedInstance().firstName)\", \"lastName\": \"\(UdacityLogin.sharedInstance().lastName)\",\"mapString\": \"\(addressField)\", \"mediaURL\": \"\(link)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
+		request.httpBody = "{\"uniqueKey\": \"\(UdacityLogin.sharedInstance().userKey)\", \"firstName\": \"\(UdacityLogin.sharedInstance().firstName)\", \"lastName\": \"\(UdacityLogin.sharedInstance().lastName)\",\"mapString\": \"\(addressField)\", \"mediaURL\": \"\(link)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: String.Encoding.utf8)
 
 		//Initialize session.
-		let session = NSURLSession.sharedSession()
+		let session = URLSession.shared
 
 		//Initialize task for data retrieval.
-		let task = session.dataTaskWithRequest(request) { data, response, error in
+		let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
 
 		if error != nil {
-			completionHandler(success: false, errorString: "Failed to submit data.")
+			completionHandler(false, "Failed to submit data.")
 		} else {
-			completionHandler(success: true, errorString: nil)
+			completionHandler(true, nil)
 			}
 
-		}
+		}) 
 		task.resume()
 
 

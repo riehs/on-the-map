@@ -23,12 +23,12 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	var coordinates: CLLocationCoordinate2D!
 
 
-	@IBAction func tapCancelButton(sender: AnyObject) {
-		dismissViewControllerAnimated(true, completion: nil)
+	@IBAction func tapCancelButton(_ sender: AnyObject) {
+		dismiss(animated: true, completion: nil)
 	}
 
 
-    @IBAction func tapFindButton(sender: AnyObject) {
+    @IBAction func tapFindButton(_ sender: AnyObject) {
         findOnMap()
     }
 
@@ -45,14 +45,14 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         addressField.delegate = self
 
 		//These items aren't revealed until the user successfully finds a location.
-		mapView.hidden = true
-		submitButton.hidden = true
-		workingMessage.hidden = true
+		mapView.isHidden = true
+		submitButton.isHidden = true
+		workingMessage.isHidden = true
 	}
 
 
 	//Calls the findOnMap() function when the keyboard return key is pressed.
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
 		findOnMap()
 		return true
@@ -62,7 +62,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 	func findOnMap() {
 
 		//Indicates the geocoding is in process.
-		workingMessage.hidden = false
+		workingMessage.isHidden = false
 
 		let location = addressField.text
 		let geocoder: CLGeocoder = CLGeocoder()
@@ -72,7 +72,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 			//Returns an error if geocoding is unsuccessful.
 			if ((error) != nil) {
-				self.workingMessage.hidden = true
+				self.workingMessage.isHidden = true
 				self.errorAlert("Invalid location", error: "Please try again.")
 			}
 
@@ -87,7 +87,7 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 				pointAnnotation.coordinate = coordinates
 
 				//Displays the map.
-				self.mapView.hidden = false
+				self.mapView.isHidden = false
 
 				//Places the annotation on the map.
 				self.mapView?.addAnnotation(pointAnnotation)
@@ -102,9 +102,9 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 				self.coordinates = coordinates
 
 				//Items used to look for a location are hidden.
-				self.workingMessage.hidden = true
-				self.findButton.hidden = true
-				self.addressField.hidden = true
+				self.workingMessage.isHidden = true
+				self.findButton.isHidden = true
+				self.addressField.isHidden = true
 
 				//The keyboad is dismissed.
 				self.addressField.resignFirstResponder()
@@ -113,38 +113,38 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 				self.linkField.resignFirstResponder()
 
 				//The user can now submit the location.
-				self.submitButton.hidden = false
+				self.submitButton.isHidden = false
 
 			}
 		})
 	}
 
 
-	@IBAction func submitLocation(sender: AnyObject) {
+	@IBAction func submitLocation(_ sender: AnyObject) {
 
 		if validateUrl(linkField.text!) == false {
 			errorAlert("Invalid URL", error: "Please try again.")
 		} else {
 
 			//Prevents user from submitting twice.
-			submitButton.hidden = true
+			submitButton.isHidden = true
 
 			//Indicates that the app is working
-			workingMessage.hidden = false
+			workingMessage.isHidden = false
 
 			//Submits the new data point.
 			MapPoints.sharedInstance().submitData(coordinates.latitude.description, longitude: coordinates.longitude.description, addressField: addressField.text!, link: linkField.text!) { (success, errorString) in
 				if success {
-					dispatch_async(dispatch_get_main_queue(), {
+					DispatchQueue.main.async(execute: {
 						MapPoints.sharedInstance().needToRefreshData = true
-						self.dismissViewControllerAnimated(true, completion: nil)
+						self.dismiss(animated: true, completion: nil)
 					})
 				} else {
-					dispatch_async(dispatch_get_main_queue(), {
+					DispatchQueue.main.async(execute: {
 						
 						//If there is an error, the submit button is unhidden so that the user can try again.
-						self.submitButton.hidden = false
-						self.workingMessage.hidden = true
+						self.submitButton.isHidden = false
+						self.workingMessage.isHidden = true
 						self.errorAlert("Error", error: errorString!)
 					})
 				}
@@ -154,15 +154,15 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 
 	//Creates an Alert-style error message.
-	func errorAlert(title: String, error: String) {
-		let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .Alert)
-		controller.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-		presentViewController(controller, animated: true, completion: nil)
+	func errorAlert(_ title: String, error: String) {
+		let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .alert)
+		controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+		present(controller, animated: true, completion: nil)
 	}
 
 
 	//Makes it easier for the user to enter a valid link.
-	func textFieldDidBeginEditing(textField: UITextField) {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
 
 		if textField.tag == LINK_FIELD {
 			textField.text = "http://"
@@ -171,9 +171,9 @@ class AddPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
 
 	//Regular expression used for validating submitted URLs.
-	func validateUrl(url: String) -> Bool {
+	func validateUrl(_ url: String) -> Bool {
 		let pattern = "^(https?:\\/\\/)([a-zA-Z0-9_\\-~]+\\.)+[a-zA-Z0-9_\\-~\\/\\.]+$"
-		if url.rangeOfString(pattern, options: .RegularExpressionSearch) != nil {
+		if url.range(of: pattern, options: .regularExpression) != nil {
 			return true
 		}
 		return false

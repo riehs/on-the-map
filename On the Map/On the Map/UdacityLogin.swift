@@ -17,39 +17,39 @@ class UdacityLogin: NSObject {
 
 
 	//Authenticate user and get unique userKey.
-	func loginToUdacity(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func loginToUdacity(username: String, password: String, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
 		//Get Session ID.
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+		let request = NSMutableURLRequest(url: NSURL(string: "https://www.udacity.com/api/session")! as URL)
 
 		//API parameters.
-		request.HTTPMethod = "POST"
+		request.httpMethod = "POST"
 		request.addValue("application/json", forHTTPHeaderField: "Accept")
 		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.HTTPBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+		request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: String.Encoding.utf8)
 
 		//Initialize the session.
-		let session = NSURLSession.sharedSession()
+		let session = URLSession.shared
 
 		//Initialize the task for getting the data.
-		let task = session.dataTaskWithRequest(request) { data, response, error in
+		let task = session.dataTask(with: request as URLRequest) { data, response, error in
 
 			if error != nil {
-				completionHandler(success: false, errorString: error!.description)
-				}
+				completionHandler(false, error!.localizedDescription)
+			}
 
 			//The first five characters must be removed. They are included by Udacity for security purposes.
-			let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
+			let newData = data!.subdata(in: 5..<(data!.count))
 
 			//Parse the data.
-			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+			let parsedResult = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
-			//Get the uerKey.
-			if let userKey = parsedResult["account"]?.valueForKey("key") as? String {
+			//Get the userKey.
+			if let userKey = (parsedResult["account"] as! [String: Any])["key"] as? String {
 				self.userKey = userKey
-				completionHandler(success: true, errorString: nil)
+				completionHandler(true, nil)
 			} else {
-				completionHandler(success: false, errorString: "Incorrect username or password.")
+				completionHandler(false, "Incorrect username or password.")
 			}
 		}
 		task.resume()
@@ -57,43 +57,44 @@ class UdacityLogin: NSObject {
 
 
 	//Using the unique UserKey, get the user's first and last name.
-	func setFirstNameLastName(completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func setFirstNameLastName(completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
 		//Initialize URL.
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(self.userKey)")!)
+		let request = NSMutableURLRequest(url: NSURL(string: "https://www.udacity.com/api/users/\(self.userKey)")! as URL)
 
 		//Initialize session.
-		let session = NSURLSession.sharedSession()
+		let session = URLSession.shared
 
 		//Initialize the task for getting the data.
-		let task = session.dataTaskWithRequest(request) { data, response, error in
+		let task = session.dataTask(with: request as URLRequest) { data, response, error in
 
 			if error != nil {
-				completionHandler(success: false, errorString: error!.description)
+				completionHandler(false, error!.localizedDescription)
 			}
 
 			//The first five characters must be removed. They are included by Udacity for security purposes.
-			let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
+			let newData = data!.subdata(in: 5..<(data!.count))
 
 			//Parse the data.
-			let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+			let parsedResult = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
 			//Get the first name.
-			if let firstName = parsedResult["user"]?.valueForKey("first_name") as? String {
+			if let firstName = (parsedResult["user"] as! [String: Any])["first_name"] as? String {
 				self.firstName = firstName
-				} else {
-				completionHandler(success: false, errorString: "Could not retrieve first or last name from Udacity.")
-					return
+			} else {
+				completionHandler(false, "Could not retrieve first or last name from Udacity.")
+				return
 			}
 
 			//Get the last name.
-			if let lastName = parsedResult["user"]?.valueForKey("last_name") as? String {
+			if let lastName = (parsedResult["user"] as! [String: Any])["last_name"] as? String {
 				self.lastName = lastName
-				} else {
-					completionHandler(success: false, errorString: "Could not retrieve first or last name from Udacity.")
-					return
-				}
-			completionHandler(success: true, errorString: nil)
+			} else {
+				completionHandler(false, "Could not retrieve first or last name from Udacity.")
+				return
+			}
+
+			completionHandler(true, nil)
 		}
 		task.resume()
 	}

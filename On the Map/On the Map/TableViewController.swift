@@ -12,25 +12,25 @@ class TableViewController: UITableViewController, ReloadableTab {
 
 
 	//The data for the table cells is stored in the mapPonts array in the sharedInstace of the MapPoints object.
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
 		let cellReuseIdentifier = "MapPointTableViewCell"
-		let mapPoint = MapPoints.sharedInstance().mapPoints[indexPath.row]
-		let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)
+		let mapPoint = MapPoints.sharedInstance().mapPoints[(indexPath as NSIndexPath).row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)
 
 		cell!.textLabel!.text = mapPoint.fullName
 		return cell!
 	}
 
 
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return MapPoints.sharedInstance().mapPoints.count
 	}
 
 
 	//Opens the mediaURL in Safari when a table cell is tapped.
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		UIApplication.sharedApplication().openURL(NSURL(string: MapPoints.sharedInstance().mapPoints[indexPath.row].mediaURL)!)
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		UIApplication.shared.openURL(URL(string: MapPoints.sharedInstance().mapPoints[(indexPath as NSIndexPath).row].mediaURL)!)
 	}
 
 

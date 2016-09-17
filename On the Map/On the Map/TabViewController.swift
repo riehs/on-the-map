@@ -13,12 +13,12 @@ class TabViewController: UITabBarController {
 
 	@IBOutlet weak var refreshButton: UIBarButtonItem!
 
-	@IBAction func tapRefreshButton(sender: AnyObject) {
+	@IBAction func tapRefreshButton(_ sender: AnyObject) {
 		refreshData()
 	}
 
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(true)
 
 		//Checks to see if flag has been set to true by AddPinViewController.
@@ -32,21 +32,21 @@ class TabViewController: UITabBarController {
 	//Reloads the data on the Map and Table views.
 	func refreshData() {
 		//The disabled refresh button indicates that the refresh is in progress.
-		refreshButton.enabled = false
+		refreshButton.isEnabled = false
 
 		//This function fetches the latest data from the server.
 		MapPoints.sharedInstance().fetchData() { (success, errorString) in
 			if !success {
-				dispatch_async(dispatch_get_main_queue(), {
-					let controller: UIAlertController = UIAlertController(title: "Error", message: "Error loading map data. Tap Refresh to try again.", preferredStyle: .Alert)
-					controller.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-					self.presentViewController(controller, animated: true, completion: nil)
+				DispatchQueue.main.async(execute: {
+					let controller: UIAlertController = UIAlertController(title: "Error", message: "Error loading map data. Tap Refresh to try again.", preferredStyle: .alert)
+					controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+					self.present(controller, animated: true, completion: nil)
 
 					//The user can try refreshing again.
-					self.refreshButton.enabled = true
+					self.refreshButton.isEnabled = true
 				})
 			} else {
-				dispatch_async(dispatch_get_main_queue(), {
+				DispatchQueue.main.async(execute: {
 					if let viewControllers = self.viewControllers {
 						for viewController in viewControllers {
 							(viewController as! ReloadableTab).reloadViewController()
@@ -54,7 +54,7 @@ class TabViewController: UITabBarController {
 					}
 
 					//The re-enabled refresh button indicates that the refresh is complete.
-					self.refreshButton.enabled = true
+					self.refreshButton.isEnabled = true
 				})
 			}
 		}
