@@ -126,10 +126,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="zRw-bd-J7V" firstAttribute="leading" secondItem="WYq-2I-X7g" secondAttribute="leading" id="Eth-Av-veb"/>
-                            <constraint firstAttribute="trailing" secondItem="zRw-bd-J7V" secondAttribute="trailing" id="GFS-em-dWp"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="zRw-bd-J7V" secondAttribute="bottom" constant="3" id="SQq-vc-vj4"/>
-                            <constraint firstItem="zRw-bd-J7V" firstAttribute="top" secondItem="WYq-2I-X7g" secondAttribute="top" id="XDa-PJ-mZU"/>
+                            <constraint firstItem="zRw-bd-J7V" firstAttribute="leading" secondItem="WYq-2I-X7g" secondAttribute="leading" id="2c8-wQ-4E2"/>
+                            <constraint firstItem="zRw-bd-J7V" firstAttribute="top" secondItem="g7v-W2-kku" secondAttribute="bottom" id="fLe-YX-rVk"/>
+                            <constraint firstAttribute="trailing" secondItem="zRw-bd-J7V" secondAttribute="trailing" id="gKS-gr-rdn"/>
+                            <constraint firstItem="lHx-pJ-kaX" firstAttribute="top" secondItem="zRw-bd-J7V" secondAttribute="bottom" id="jsm-md-PCR"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
