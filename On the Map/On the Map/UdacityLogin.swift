@@ -45,7 +45,7 @@ class UdacityLogin: NSObject {
 			let parsedResult = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
 			//Get the userKey.
-			if let userKey = (parsedResult["account"] as! [String: Any])["key"] as? String {
+			if let userKey = (parsedResult["account"] as? [String: Any])?["key"] as? String {
 				self.userKey = userKey
 				completionHandler(true, nil)
 			} else {
@@ -79,7 +79,7 @@ class UdacityLogin: NSObject {
 			let parsedResult = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
 			//Get the first name.
-			if let firstName = (parsedResult["user"] as! [String: Any])["first_name"] as? String {
+			if let firstName = (parsedResult["user"] as? [String: Any])?["first_name"] as? String {
 				self.firstName = firstName
 			} else {
 				completionHandler(false, "Could not retrieve first or last name from Udacity.")
@@ -87,7 +87,7 @@ class UdacityLogin: NSObject {
 			}
 
 			//Get the last name.
-			if let lastName = (parsedResult["user"] as! [String: Any])["last_name"] as? String {
+			if let lastName = (parsedResult["user"] as? [String: Any])?["last_name"] as? String {
 				self.lastName = lastName
 			} else {
 				completionHandler(false, "Could not retrieve first or last name from Udacity.")
