@@ -211,25 +211,25 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Daniel Riehs";
 				TargetAttributes = {
 					A26588F61ABEFB0100D52C10 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = CWQL44X59A;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1100;
 					};
 					A265890B1ABEFB0100D52C10 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = CWQL44X59A;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1100;
 						TestTargetID = A26588F61ABEFB0100D52C10;
 					};
 				};
 			};
 			buildConfigurationList = A26588F21ABEFB0100D52C10 /* Build configuration list for PBXProject "On the Map" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -435,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danielriehs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -449,7 +449,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danielriehs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -467,7 +467,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danielriehs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On the Map.app/On the Map";
 			};
 			name = Debug;
@@ -482,7 +482,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.danielriehs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On the Map.app/On the Map";
 			};
 			name = Release;

@@ -77,7 +77,7 @@ class UdacityLogin: NSObject {
 			let newData = data!.subdata(in: 5..<(data!.count))
 
 			//Parse the data.
-			let parsedResult = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
+			_ = (try! JSONSerialization.jsonObject(with: newData, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
 			self.firstName = "John"
 
